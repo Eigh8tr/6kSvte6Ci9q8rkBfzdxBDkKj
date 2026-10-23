@@ -203,10 +203,10 @@ return {
 			Frame3.Size = UDim2.new(0, 0, 0, 0)
 			Frame3.ClipsDescendants = true
 			Frame4.Position = UDim2.new(3, 0, 0, 0)
-			local tween = TweenService:Create(Frame3, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, 61) })
+			local tween = TweenService:Create(Frame3, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, Frame4.AbsoluteSize.Y) })
 			tween:Play()
 			task.wait(0.2)
-			local tween2 = TweenService:Create(Frame3, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, 61) })
+			local tween2 = TweenService:Create(Frame3, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, Frame4.AbsoluteSize.Y) })
 			tween2:Play()
 			task.wait(0.2)
 			local tween3 = TweenService:Create(Frame4, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0, 0, 0, 0) })
@@ -393,7 +393,7 @@ return {
 			Frame7.Size = UDim2.new(0, 0, 0, 0)
 			Frame7.ClipsDescendants = true
 			Frame8.Position = UDim2.new(-10, 0, 0, 0)
-			local tween4 = TweenService:Create(Frame7, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, 61) })
+			local tween4 = TweenService:Create(Frame7, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, Frame8.AbsoluteSize.Y) })
 			tween4:Play()
 			task.wait(0.1)
 			local tween5 = TweenService:Create(Frame8, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0, 0, 0, 0) })
@@ -514,7 +514,7 @@ return {
 			Frame11.Size = UDim2.new(0, 0, 0, 0)
 			Frame11.ClipsDescendants = true
 			Frame12.Position = UDim2.new(3, 0, 0, 0)
-			local tween6 = TweenService:Create(Frame11, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, 61) })
+			local tween6 = TweenService:Create(Frame11, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, Frame12.AbsoluteSize.Y) })
 			tween6:Play()
 			task.wait(0.1)
 			local tween7 = TweenService:Create(Frame12, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0, 0, 0, 0) })
@@ -562,7 +562,7 @@ return {
 		Frame15.BorderSizePixel = 0
 		Frame15.Size = UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY))
 		local guiInset = GuiService:GetGuiInset()
-		Frame15.Position = UDim2.fromOffset(0, ((0 - guiInset.Y) - 0))
+		Frame15.Position = UDim2.fromOffset(((workspace.CurrentCamera.ViewportSize.X / 2) - (UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY)).X.Offset / 2)), (((workspace.CurrentCamera.ViewportSize.Y / 2) - guiInset.Y) - (UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY)).Y.Offset / 2)))
 		Frame15.InputBegan:Connect(function(input, gameProcessed)
 		end)
 		Frame15.InputEnded:Connect(function(input2, gameProcessed2)
@@ -1299,7 +1299,7 @@ return {
 		UIListLayout13.Parent = Frame32
 		UIListLayout13.SortOrder = Enum.SortOrder.LayoutOrder
 		UIListLayout13.VerticalAlignment = Enum.VerticalAlignment.Center
-		Frame31.Size = UDim2.new(0, 50, 0, 30)
+		Frame31.Size = UDim2.new(0, (TextButton5.AbsoluteSize.X + 20), 0, 30)
 		BindableEvent.Event:Connect(function(arg19)
 			local tween156 = TweenService:Create(Frame30, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg19].ItemBackgroundColor })
 			tween156:Play()
@@ -1959,10 +1959,10 @@ return {
 				Frame94.Size = UDim2.new(0, 0, 0, 0)
 				Frame94.ClipsDescendants = true
 				Frame95.Position = UDim2.new(3, 0, 0, 0)
-				local tween41 = TweenService:Create(Frame94, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, 61) })
+				local tween41 = TweenService:Create(Frame94, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, Frame95.AbsoluteSize.Y) })
 				tween41:Play()
 				task.wait(0.2)
-				local tween42 = TweenService:Create(Frame94, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, 61) })
+				local tween42 = TweenService:Create(Frame94, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, Frame95.AbsoluteSize.Y) })
 				tween42:Play()
 				task.wait(0.2)
 				local tween43 = TweenService:Create(Frame95, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0, 0, 0, 0) })
@@ -1971,7 +1971,7 @@ return {
 				local tween44 = TweenService:Create(Frame95, TweenInfo.new(0.3, Enum.EasingStyle.Quad), { Position = UDim2.new(3, 0, 0, 0) })
 				tween44:Play()
 				task.wait(0.2)
-				local tween45 = TweenService:Create(Frame94, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, 61) })
+				local tween45 = TweenService:Create(Frame94, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, Frame95.AbsoluteSize.Y) })
 				tween45:Play()
 				task.wait(0.2)
 				local tween46 = TweenService:Create(Frame94, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, 0) })
@@ -2089,17 +2089,17 @@ return {
 			pcall(function()
 				local json2 = HttpService:JSONEncode({
 					{ flag = "UI Keybind", key = "H", type = "KeyBind" },
-					{ color = tostring(arg62.CurrentColor), flag = arg62.Flag, type = "ColorPicker" },
-					{ flag = arg142.Flag, status = arg147, type = "Toggle" },
-					{ flag = arg123.Flag, type = "Slider", value = math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))) },
-					{ flag = arg55.Flag, status = arg60, type = "CheckBox" },
+					{ flag = arg88.Flag, key = arg95, type = "KeyBind" },
 					{ flag = arg69.Flag, multioption = arg69.MultiOption, selected = {}, type = "Dropdown" },
 					{ flag = "ConfigDropdown", multioption = false, selected = {}, type = "Dropdown" },
+					{ flag = arg123.Flag, type = "Slider", value = math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))) },
 					{ flag = "ConfigNamer", text = "", type = "TextBox" },
+					{ flag = arg142.Flag, status = arg147, type = "Toggle" },
 					{ flag = arg130.Flag, text = arg137, type = "TextBox" },
+					{ flag = arg112.Flag, selected = { arg112.List[1] }, type = "Picker" },
 					{ flag = "ThemePicker", selected = list2, type = "Picker" },
-					{ flag = arg88.Flag, key = arg95, type = "KeyBind" },
-					{ flag = arg112.Flag, selected = { arg112.List[1] }, type = "Picker" }
+					{ color = tostring(arg62.CurrentColor), flag = arg62.Flag, type = "ColorPicker" },
+					{ flag = arg55.Flag, status = arg60, type = "CheckBox" }
 				})
 				writefile(arg12.Config.FolderPath .. "/" .. tostring(arg12.Config.FileName), json2)
 			end)
@@ -3687,7 +3687,7 @@ return {
 						UIListLayout36.Parent = Frame63
 						UIListLayout36.SortOrder = Enum.SortOrder.LayoutOrder
 						UIListLayout36.VerticalAlignment = Enum.VerticalAlignment.Center
-						Frame62.Size = UDim2.new(0, 50, 0, 30)
+						Frame62.Size = UDim2.new(0, (TextButton19.AbsoluteSize.X + 20), 0, 30)
 						BindableEvent.Event:Connect(function(arg89)
 							local tween229 = TweenService:Create(Frame61, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg89].ItemBackgroundColor })
 							tween229:Play()
@@ -3776,7 +3776,7 @@ return {
 							SetKey = function(arg94, arg95)
 								getgenv().KeyFunction = connection2
 								TextButton19.Text = arg95
-								Frame62.Size = UDim2.new(0, 50, 0, 30)
+								Frame62.Size = UDim2.new(0, (TextButton19.AbsoluteSize.X + 20), 0, 30)
 							end
 						}
 					end,
@@ -4544,7 +4544,7 @@ return {
 							SetValue = function(arg127, arg128)
 								TextLabel56.Text = math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue))))
 								arg123.Callback(math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))))
-								Frame78:TweenSize(UDim2.new(0, math.max((((math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))) - tonumber(tostring(arg123.MinValue))) / (tonumber(tostring(arg123.MaxValue)) - tonumber(tostring(arg123.MinValue)))) * 0), 7), 1, 0), "Out", "Quad", 0.09, true)
+								Frame78:TweenSize(UDim2.new(0, math.max((((math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))) - tonumber(tostring(arg123.MinValue))) / (tonumber(tostring(arg123.MaxValue)) - tonumber(tostring(arg123.MinValue)))) * CanvasGroup.AbsoluteSize.X), 7), 1, 0), "Out", "Quad", 0.09, true)
 							end
 						}
 					end,
@@ -5130,17 +5130,17 @@ return {
 				pcall(function()
 					local json = HttpService:JSONEncode({
 						{ flag = "UI Keybind", key = "H", type = "KeyBind" },
-						{ color = tostring(arg62.CurrentColor), flag = arg62.Flag, type = "ColorPicker" },
-						{ flag = arg142.Flag, status = arg147, type = "Toggle" },
-						{ flag = arg123.Flag, type = "Slider", value = math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))) },
-						{ flag = arg55.Flag, status = arg60, type = "CheckBox" },
+						{ flag = arg88.Flag, key = arg95, type = "KeyBind" },
 						{ flag = arg69.Flag, multioption = arg69.MultiOption, selected = {}, type = "Dropdown" },
 						{ flag = "ConfigDropdown", multioption = false, selected = {}, type = "Dropdown" },
+						{ flag = arg123.Flag, type = "Slider", value = math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))) },
 						{ flag = "ConfigNamer", text = "", type = "TextBox" },
+						{ flag = arg142.Flag, status = arg147, type = "Toggle" },
 						{ flag = arg130.Flag, text = arg137, type = "TextBox" },
+						{ flag = arg112.Flag, selected = { arg112.List[1] }, type = "Picker" },
 						{ flag = "ThemePicker", selected = list2, type = "Picker" },
-						{ flag = arg88.Flag, key = arg95, type = "KeyBind" },
-						{ flag = arg112.Flag, selected = { arg112.List[1] }, type = "Picker" }
+						{ color = tostring(arg62.CurrentColor), flag = arg62.Flag, type = "ColorPicker" },
+						{ flag = arg55.Flag, status = arg60, type = "CheckBox" }
 					})
 					writefile(arg12.Config.FolderPath .. "/" .. arg158, json)
 				end)
@@ -5270,10 +5270,10 @@ return {
 					Frame90.Size = UDim2.new(0, 0, 0, 0)
 					Frame90.ClipsDescendants = true
 					Frame91.Position = UDim2.new(3, 0, 0, 0)
-					local tween9 = TweenService:Create(Frame90, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, 61) })
+					local tween9 = TweenService:Create(Frame90, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, Frame91.AbsoluteSize.Y) })
 					tween9:Play()
 					task.wait(0.2)
-					local tween10 = TweenService:Create(Frame90, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, 61) })
+					local tween10 = TweenService:Create(Frame90, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, Frame91.AbsoluteSize.Y) })
 					tween10:Play()
 					task.wait(0.2)
 					local tween11 = TweenService:Create(Frame91, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0, 0, 0, 0) })
@@ -5282,7 +5282,7 @@ return {
 					local tween12 = TweenService:Create(Frame91, TweenInfo.new(0.3, Enum.EasingStyle.Quad), { Position = UDim2.new(3, 0, 0, 0) })
 					tween12:Play()
 					task.wait(0.2)
-					local tween13 = TweenService:Create(Frame90, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, 61) })
+					local tween13 = TweenService:Create(Frame90, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, Frame91.AbsoluteSize.Y) })
 					tween13:Play()
 					task.wait(0.2)
 					local tween14 = TweenService:Create(Frame90, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 0, 0, 0) })
