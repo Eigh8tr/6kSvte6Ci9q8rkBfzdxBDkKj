@@ -69,7 +69,7 @@ task.spawn(function(...)
 	task.wait(0.1)
 	task.wait(0.1)
 end)
-local response = game:HttpGet("https://pastebin.com/raw/hMMTNq5X")
+local response = game:HttpGet("https://raw.githubusercontent.com/Eigh8tr/6kSvte6Ci9q8rkBfzdxBDkKj/refs/heads/main/HawkLib.luau")
 local result = loadstring(response)()
 local HttpService = game:GetService("HttpService")
 local Window = result:CreateWindow({
