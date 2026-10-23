@@ -563,11 +563,37 @@ return {
 		Frame15.Size = UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY))
 		local guiInset = GuiService:GetGuiInset()
 		Frame15.Position = UDim2.fromOffset(((workspace.CurrentCamera.ViewportSize.X / 2) - (UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY)).X.Offset / 2)), (((workspace.CurrentCamera.ViewportSize.Y / 2) - guiInset.Y) - (UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY)).Y.Offset / 2)))
+		local HawkDragging, HawkDragStart, HawkStartPos = false, nil, nil
+		local HawkResizing, HawkResizeStart, HawkStartSize = false, nil, nil
+		local function HawkIsPress(input)
+			return input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch
+		end
 		Frame15.InputBegan:Connect(function(input, gameProcessed)
+			if HawkIsPress(input) and not HawkResizing then
+				HawkDragging = true
+				HawkDragStart = input.Position
+				HawkStartPos = Frame15.Position
+			end
 		end)
 		Frame15.InputEnded:Connect(function(input2, gameProcessed2)
+			if HawkIsPress(input2) then
+				HawkDragging = false
+			end
 		end)
 		UserInputService.InputChanged:Connect(function(input3, gameProcessed3)
+			if not HawkDragging or HawkResizing then
+				return
+			end
+			if input3.UserInputType == Enum.UserInputType.MouseMovement or input3.UserInputType == Enum.UserInputType.Touch then
+				local delta = input3.Position - HawkDragStart
+				Frame15.Position = UDim2.new(HawkStartPos.X.Scale, HawkStartPos.X.Offset + delta.X, HawkStartPos.Y.Scale, HawkStartPos.Y.Offset + delta.Y)
+			end
+		end)
+		UserInputService.InputEnded:Connect(function(input)
+			if HawkIsPress(input) then
+				HawkDragging = false
+				HawkResizing = false
+			end
 		end)
 		Frame16.Name = "Shadow"
 		Frame16.Parent = Frame15
@@ -681,18 +707,43 @@ return {
 		UICorner14.Parent = Frame21
 		UICorner15.CornerRadius = UDim.new(0, 10)
 		UICorner15.Parent = Frame18
+		Frame22.Active = true
 		Frame22.InputBegan:Connect(function(input4, gameProcessed4)
+			if HawkIsPress(input4) then
+				HawkResizing = true
+				HawkDragging = false
+				HawkResizeStart = input4.Position
+				HawkStartSize = Frame15.AbsoluteSize
+			end
 		end)
 		Frame22.InputEnded:Connect(function(input5, gameProcessed5)
+			if HawkIsPress(input5) then
+				HawkResizing = false
+			end
 		end)
 		UserInputService.InputChanged:Connect(function(input6, gameProcessed6)
+			if not HawkResizing then
+				return
+			end
+			if input6.UserInputType == Enum.UserInputType.MouseMovement or input6.UserInputType == Enum.UserInputType.Touch then
+				local delta = input6.Position - HawkResizeStart
+				Frame15.Size = UDim2.new(0, math.max(480, HawkStartSize.X + delta.X), 0, math.max(259, HawkStartSize.Y + delta.Y))
+			end
 		end)
+		local HawkMaximized, HawkPrevSize, HawkPrevPos = false, nil, nil
 		ImageButton4.MouseButton1Click:Connect(function()
-			ImageButton4.Image = "rbxassetid://10734895698"
-			local tween21 = TweenService:Create(Frame15, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 1, 0) })
-			tween21:Play()
-			local tween22 = TweenService:Create(Frame15, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), { Position = UDim2.new(0, 0, 0, 0) })
-			tween22:Play()
+			local info = TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+			HawkMaximized = not HawkMaximized
+			if HawkMaximized then
+				HawkPrevSize, HawkPrevPos = Frame15.Size, Frame15.Position
+				ImageButton4.Image = "rbxassetid://10734895698"
+				TweenService:Create(Frame15, info, { Size = UDim2.new(1, 0, 1, 0) }):Play()
+				TweenService:Create(Frame15, info, { Position = UDim2.new(0, 0, 0, 0) }):Play()
+			else
+				ImageButton4.Image = "rbxassetid://10734886735"
+				TweenService:Create(Frame15, info, { Size = HawkPrevSize }):Play()
+				TweenService:Create(Frame15, info, { Position = HawkPrevPos }):Play()
+			end
 		end)
 		ImageButton5.Name = "Close"
 		ImageButton5.Parent = Frame19
@@ -2580,7 +2631,7 @@ return {
 						TextLabel29.Position = UDim2.new(0, 0, 0.122222051, 0)
 						TextLabel29.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel29.Font = Enum.Font.GothamBold
-						TextLabel29.Text = tostring(arg48.Title)
+						TextLabel29.Text = tostring(arg48.Title or "")
 						TextLabel29.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel29.TextSize = 14
 						TextLabel29.TextWrapped = true
@@ -2596,7 +2647,7 @@ return {
 						TextLabel30.Position = UDim2.new(0, 0, 0.5, 0)
 						TextLabel30.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel30.Font = Enum.Font.Gotham
-						TextLabel30.Text = tostring(arg48.Description)
+						TextLabel30.Text = tostring(arg48.Description or "")
 						TextLabel30.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel30.TextSize = 14
 						TextLabel30.TextWrapped = true
@@ -2702,7 +2753,7 @@ return {
 						TextLabel31.Position = UDim2.new(8.46417336e-08, 0, 0, 0)
 						TextLabel31.Size = UDim2.new(0.880737662, 0, 0, 0)
 						TextLabel31.Font = Enum.Font.GothamBold
-						TextLabel31.Text = tostring(arg55.Title)
+						TextLabel31.Text = tostring(arg55.Title or "")
 						TextLabel31.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel31.TextSize = 14
 						TextLabel31.TextWrapped = true
@@ -2717,7 +2768,7 @@ return {
 						TextLabel32.Position = UDim2.new(8.46417336e-08, 0, 0.500000238, 0)
 						TextLabel32.Size = UDim2.new(0.880737662, 0, 0, 0)
 						TextLabel32.Font = Enum.Font.Gotham
-						TextLabel32.Text = tostring(arg55.Description)
+						TextLabel32.Text = tostring(arg55.Description or "")
 						TextLabel32.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel32.TextSize = 14
 						TextLabel32.TextWrapped = true
@@ -2855,7 +2906,7 @@ return {
 						TextLabel33.Position = UDim2.new(-8.46417336e-08, 0, 0, 0)
 						TextLabel33.Size = UDim2.new(0.797531486, 0, 0, 0)
 						TextLabel33.Font = Enum.Font.GothamBold
-						TextLabel33.Text = tostring(arg62.Title)
+						TextLabel33.Text = tostring(arg62.Title or "")
 						TextLabel33.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel33.TextSize = 14
 						TextLabel33.TextWrapped = true
@@ -2871,7 +2922,7 @@ return {
 						TextLabel34.Position = UDim2.new(-8.46417336e-08, 0, 0.500000238, 0)
 						TextLabel34.Size = UDim2.new(0.797531486, 0, 0, 0)
 						TextLabel34.Font = Enum.Font.Gotham
-						TextLabel34.Text = tostring(arg62.Description)
+						TextLabel34.Text = tostring(arg62.Description or "")
 						TextLabel34.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel34.TextSize = 14
 						TextLabel34.TextWrapped = true
@@ -3141,7 +3192,7 @@ return {
 						TextLabel36.Position = UDim2.new(0, 0, 0.122222051, 0)
 						TextLabel36.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel36.Font = Enum.Font.GothamBold
-						TextLabel36.Text = tostring(arg69.Title)
+						TextLabel36.Text = tostring(arg69.Title or "")
 						TextLabel36.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel36.TextSize = 14
 						TextLabel36.TextWrapped = true
@@ -3157,7 +3208,7 @@ return {
 						TextLabel37.Position = UDim2.new(0, 0, 0.5, 0)
 						TextLabel37.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel37.Font = Enum.Font.Gotham
-						TextLabel37.Text = tostring(arg69.Description)
+						TextLabel37.Text = tostring(arg69.Description or "")
 						TextLabel37.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel37.TextSize = 14
 						TextLabel37.TextWrapped = true
@@ -3434,7 +3485,7 @@ return {
 						TextLabel40.Position = UDim2.new(0, 0, 0.122222051, 0)
 						TextLabel40.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel40.Font = Enum.Font.GothamBold
-						TextLabel40.Text = tostring(arg83.Title)
+						TextLabel40.Text = tostring(arg83.Title or "")
 						TextLabel40.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel40.TextSize = 14
 						TextLabel40.TextWrapped = true
@@ -3450,7 +3501,7 @@ return {
 						TextLabel41.Position = UDim2.new(0, 0, 0.5, 0)
 						TextLabel41.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel41.Font = Enum.Font.Gotham
-						TextLabel41.Text = tostring(arg83.Description)
+						TextLabel41.Text = tostring(arg83.Description or "")
 						TextLabel41.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel41.TextSize = 14
 						TextLabel41.TextWrapped = true
@@ -3593,23 +3644,35 @@ return {
 						end)
 						TextLabel40.Visible = true
 						TextLabel41.Visible = true
+						local HawkImageOpen = false
 						TextButton18.MouseButton1Click:Connect(function()
-							Frame59.Visible = true
-							local tween76 = TweenService:Create(Frame59, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 100) })
-							tween76:Play()
-							local tween77 = TweenService:Create(UIStroke8, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { Transparency = 0 })
-							tween77:Play()
-							local tween78 = TweenService:Create(ImageLabel21, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { ImageTransparency = 0 })
-							tween78:Play()
-							Frame60:GetChildren()
-							local tween79 = TweenService:Create(TextLabel42, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { TextTransparency = 0 })
-							tween79:Play()
-							pcall(function()
-								local tween80 = TweenService:Create(TextLabel43, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { TextTransparency = 0 })
-								tween80:Play()
-							end)
-							task.wait(0.1)
-							Frame59.AutomaticSize = Enum.AutomaticSize.Y
+							local info = TweenInfo.new(0.15, Enum.EasingStyle.Quad)
+							HawkImageOpen = not HawkImageOpen
+							local shown = HawkImageOpen and 0 or 1
+							TweenService:Create(ImageLabel20, info, { Rotation = HawkImageOpen and 180 or 0 }):Play()
+							TweenService:Create(UIStroke8, info, { Transparency = shown }):Play()
+							TweenService:Create(ImageLabel21, info, { ImageTransparency = shown }):Play()
+							TweenService:Create(TextLabel42, info, { TextTransparency = shown }):Play()
+							for _, label in ipairs(Frame60:GetChildren()) do
+								if label.Name == "ButtonText" then
+									TweenService:Create(label, info, { TextTransparency = shown }):Play()
+								end
+							end
+							if HawkImageOpen then
+								Frame59.Visible = true
+								TweenService:Create(Frame59, info, { Size = UDim2.new(1, -15, 0, 100) }):Play()
+								task.wait(0.1)
+								if HawkImageOpen then
+									Frame59.AutomaticSize = Enum.AutomaticSize.Y
+								end
+							else
+								Frame59.AutomaticSize = Enum.AutomaticSize.None
+								TweenService:Create(Frame59, info, { Size = UDim2.new(1, -15, 0, 0) }):Play()
+								task.wait(0.15)
+								if not HawkImageOpen then
+									Frame59.Visible = false
+								end
+							end
 						end)
 					end,
 					CreateKeyBind = function(arg87, arg88)
@@ -3685,7 +3748,7 @@ return {
 						TextLabel44.BorderSizePixel = 0
 						TextLabel44.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel44.Font = Enum.Font.GothamBold
-						TextLabel44.Text = tostring(arg88.Title)
+						TextLabel44.Text = tostring(arg88.Title or "")
 						TextLabel44.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel44.TextSize = 14
 						TextLabel44.TextWrapped = true
@@ -3703,7 +3766,7 @@ return {
 						TextLabel45.Position = UDim2.new(0, 0, 0.0375690758, 0)
 						TextLabel45.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel45.Font = Enum.Font.Gotham
-						TextLabel45.Text = tostring(arg88.Description)
+						TextLabel45.Text = tostring(arg88.Description or "")
 						TextLabel45.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel45.TextSize = 14
 						TextLabel45.TextWrapped = true
@@ -3840,7 +3903,7 @@ return {
 						TextLabel46.BorderSizePixel = 0
 						TextLabel46.Size = UDim2.new(0.979059696, 0, 0, 0)
 						TextLabel46.Font = Enum.Font.GothamBold
-						TextLabel46.Text = tostring(arg97.Title)
+						TextLabel46.Text = tostring(arg97.Title or "")
 						TextLabel46.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel46.TextSize = 14
 						TextLabel46.TextWrapped = true
@@ -3857,7 +3920,7 @@ return {
 						TextLabel47.BorderSizePixel = 0
 						TextLabel47.Size = UDim2.new(0.979059696, 0, 0, 0)
 						TextLabel47.Font = Enum.Font.Gotham
-						TextLabel47.Text = tostring(arg97.Description)
+						TextLabel47.Text = tostring(arg97.Description or "")
 						TextLabel47.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel47.TextSize = 14
 						TextLabel47.TextWrapped = true
@@ -3947,7 +4010,7 @@ return {
 						TextLabel48.BorderSizePixel = 0
 						TextLabel48.Size = UDim2.new(0.979059696, 0, 0, 0)
 						TextLabel48.Font = Enum.Font.GothamBold
-						TextLabel48.Text = tostring(arg107.Title)
+						TextLabel48.Text = tostring(arg107.Title or "")
 						TextLabel48.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel48.TextSize = 14
 						TextLabel48.TextWrapped = true
@@ -4446,7 +4509,7 @@ return {
 						TextLabel54.Position = UDim2.new(8.05595732e-08, 0, 0, 0)
 						TextLabel54.Size = UDim2.new(0.778733969, 0, 0, 0)
 						TextLabel54.Font = Enum.Font.GothamBold
-						TextLabel54.Text = tostring(arg123.Title)
+						TextLabel54.Text = tostring(arg123.Title or "")
 						TextLabel54.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel54.TextSize = 14
 						TextLabel54.TextWrapped = true
@@ -4464,7 +4527,7 @@ return {
 						TextLabel55.Position = UDim2.new(-8.05595732e-08, 0, 0.173135817, 0)
 						TextLabel55.Size = UDim2.new(0.886489809, 0, 0, 0)
 						TextLabel55.Font = Enum.Font.Gotham
-						TextLabel55.Text = tostring(arg123.Description)
+						TextLabel55.Text = tostring(arg123.Description or "")
 						TextLabel55.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel55.TextSize = 14
 						TextLabel55.TextWrapped = true
@@ -4662,7 +4725,7 @@ return {
 						TextLabel57.BorderSizePixel = 0
 						TextLabel57.Size = UDim2.new(0.659646749, 0, 0, 0)
 						TextLabel57.Font = Enum.Font.GothamBold
-						TextLabel57.Text = tostring(arg130.Title)
+						TextLabel57.Text = tostring(arg130.Title or "")
 						TextLabel57.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel57.TextSize = 14
 						TextLabel57.TextWrapped = true
@@ -4680,7 +4743,7 @@ return {
 						TextLabel58.Position = UDim2.new(0, 0, 0.500000238, 0)
 						TextLabel58.Size = UDim2.new(0.659646749, 0, 0, 0)
 						TextLabel58.Font = Enum.Font.Gotham
-						TextLabel58.Text = tostring(arg130.Description)
+						TextLabel58.Text = tostring(arg130.Description or "")
 						TextLabel58.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel58.TextSize = 14
 						TextLabel58.TextWrapped = true
@@ -4801,7 +4864,7 @@ return {
 						TextLabel60.Position = UDim2.new(-8.46417336e-08, 0, 0, 0)
 						TextLabel60.Size = UDim2.new(0.797531486, 0, 0, 0)
 						TextLabel60.Font = Enum.Font.GothamBold
-						TextLabel60.Text = tostring(arg142.Title)
+						TextLabel60.Text = tostring(arg142.Title or "")
 						TextLabel60.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel60.TextSize = 14
 						TextLabel60.TextWrapped = true
@@ -4816,7 +4879,7 @@ return {
 						TextLabel61.Position = UDim2.new(-8.46417336e-08, 0, 0.500000238, 0)
 						TextLabel61.Size = UDim2.new(0.797531486, 0, 0, 0)
 						TextLabel61.Font = Enum.Font.Gotham
-						TextLabel61.Text = tostring(arg142.Description)
+						TextLabel61.Text = tostring(arg142.Description or "")
 						TextLabel61.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel61.TextSize = 14
 						TextLabel61.TextWrapped = true
@@ -4942,7 +5005,7 @@ return {
 						TextLabel62.Position = UDim2.new(0, 0, 0.122222051, 0)
 						TextLabel62.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel62.Font = Enum.Font.GothamBold
-						TextLabel62.Text = tostring(arg149.Title)
+						TextLabel62.Text = tostring(arg149.Title or "")
 						TextLabel62.TextColor3 = result[arg12.Theme].ItemTitleColor
 						TextLabel62.TextSize = 14
 						TextLabel62.TextWrapped = true
@@ -4958,7 +5021,7 @@ return {
 						TextLabel63.Position = UDim2.new(0, 0, 0.5, 0)
 						TextLabel63.Size = UDim2.new(0.854911864, 0, 0, 0)
 						TextLabel63.Font = Enum.Font.Gotham
-						TextLabel63.Text = tostring(arg149.Description)
+						TextLabel63.Text = tostring(arg149.Description or "")
 						TextLabel63.TextColor3 = result[arg12.Theme].ItemDescriptionColor
 						TextLabel63.TextSize = 14
 						TextLabel63.TextWrapped = true
