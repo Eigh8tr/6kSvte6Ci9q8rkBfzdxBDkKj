@@ -1,5 +1,3 @@
--- HawkLib.lua devirtualized: work/hawk pipeline (hawk_opmap.py adapter) + luraph_deob.py engine back end
--- source: scripts/Hawkhub/HawkLib.lua; protos: work/hawk/protos.json
 getgenv().HawkLibLOADED = false
 getgenv().HawkLibKeybind = "H"
 
