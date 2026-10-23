@@ -373,9 +373,9 @@ tbl.CreateNotification = function(arg, arg2)
 		task.wait(0.2)
 		TweenService:Create(v8, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(0, 287, 0, v9) }):Play()
 		task.wait(0.2)
-		TweenService:Create(frame4, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0, 0, 0, 0) }):Play()
+		local v10 = frame4
+		TweenService:Create(v10, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0, 0, 0, 0) }):Play()
 		task.wait(cooldown)
-		local v10
 		TweenService:Create(v10, TweenInfo.new(0.3, Enum.EasingStyle.Quad), { Position = UDim2.new(3, 0, 0, 0) }):Play()
 		task.wait(0.2)
 		local v11 = frame3
@@ -2141,9 +2141,9 @@ tbl.CreateWindow = function(arg, arg2)
 
 					textButton2.MouseButton1Click:Connect(function()
 						if status2 == false then
-							TweenService:Create(frame15, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(1, 0, 0, 0) }):Play()
+							local v13 = frame15
+							TweenService:Create(v13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(1, 0, 0, 0) }):Play()
 							local tbl5 = { BackgroundColor3 = tbl.Themes[str].SlidingToggleAfter }
-							local v13
 							TweenService:Create(v13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl5):Play()
 							local tbl6 = { BackgroundColor3 = tbl.Themes[str].ToggleBackgroundAfter }
 							TweenService:Create(frame14, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl6):Play()
@@ -2151,9 +2151,9 @@ tbl.CreateWindow = function(arg, arg2)
 							TweenService:Create(uiStroke2, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl7):Play()
 							status2 = true
 						elseif status2 == true then
-							TweenService:Create(frame15, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0.435, 0, 0, 0) }):Play()
+							local v13 = frame15
+							TweenService:Create(v13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0.435, 0, 0, 0) }):Play()
 							local tbl5 = { BackgroundColor3 = tbl.Themes[str].SlidingToggleBefore }
-							local v13
 							TweenService:Create(v13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl5):Play()
 							local tbl6 = { BackgroundColor3 = tbl.Themes[str].ItemHoverColor }
 							TweenService:Create(frame14, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl6):Play()
@@ -2180,18 +2180,18 @@ tbl.CreateWindow = function(arg, arg2)
 
 					local tbl5 = { SetStatus = function(arg7, status3)
 						if status3 == true then
-							TweenService:Create(frame15, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(1, 0, 0, 0) }):Play()
+							local v13 = frame15
+							TweenService:Create(v13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(1, 0, 0, 0) }):Play()
 							local tbl5 = { BackgroundColor3 = tbl.Themes[str].SlidingToggleAfter }
-							local v13
 							TweenService:Create(v13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl5):Play()
 							local tbl6 = { BackgroundColor3 = tbl.Themes[str].ToggleBackgroundAfter }
 							TweenService:Create(frame14, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl6):Play()
 							local tbl7 = { Color = tbl.Themes[str].ToggleStrokeAfter }
 							TweenService:Create(uiStroke2, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl7):Play()
 						elseif status3 == false then
-							TweenService:Create(frame15, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0.435, 0, 0, 0) }):Play()
+							local v13 = frame15
+							TweenService:Create(v13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = UDim2.new(0.435, 0, 0, 0) }):Play()
 							local tbl5 = { BackgroundColor3 = tbl.Themes[str].SlidingToggleBefore }
-							local v13
 							TweenService:Create(v13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl5):Play()
 							local tbl6 = { BackgroundColor3 = tbl.Themes[str].ItemBackgroundColor }
 							TweenService:Create(frame14, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl6):Play()
@@ -2680,8 +2680,8 @@ tbl.CreateWindow = function(arg, arg2)
 					local position3 = nil
 					local position4 = nil
 					local n2 = 1
-					local v10 = n2
-					local v11 = n2
+					local n3 = n2
+					local n4 = n2
 					local flag9 = false
 					local connection4 = nil
 					local connection5 = nil
@@ -2737,11 +2737,11 @@ tbl.CreateWindow = function(arg, arg2)
 					textButton2.Text = ""
 					textButton2.TextColor3 = Color3.fromRGB(0, 0, 0)
 					textButton2.TextSize = 14
-					local v12 = Enum
-					textButton2.AutomaticSize = v12.AutomaticSize.Y
+					local v10 = Enum
+					textButton2.AutomaticSize = v10.AutomaticSize.Y
 					uiListLayout6.Parent = textButton2
-					uiListLayout6.SortOrder = v12.SortOrder.LayoutOrder
-					uiListLayout6.VerticalAlignment = v12.VerticalAlignment.Center
+					uiListLayout6.SortOrder = v10.SortOrder.LayoutOrder
+					uiListLayout6.VerticalAlignment = v10.VerticalAlignment.Center
 					uiPadding4.Parent = textButton2
 					uiPadding4.PaddingLeft = UDim.new(0, 15)
 					textLabel3.Name = "ColorPickerTitle"
@@ -2757,9 +2757,9 @@ tbl.CreateWindow = function(arg, arg2)
 					textLabel3.TextColor3 = tbl.Themes[str].ItemTitleColor
 					textLabel3.TextSize = 14
 					textLabel3.TextWrapped = true
-					local v13 = Enum
-					textLabel3.TextXAlignment = v13.TextXAlignment.Left
-					textLabel3.AutomaticSize = v13.AutomaticSize.Y
+					local v11 = Enum
+					textLabel3.TextXAlignment = v11.TextXAlignment.Left
+					textLabel3.AutomaticSize = v11.AutomaticSize.Y
 					textLabel3.LayoutOrder = 1
 					textLabel4.Name = "ColorPickerDescription"
 					textLabel4.Parent = textButton2
@@ -2774,9 +2774,9 @@ tbl.CreateWindow = function(arg, arg2)
 					textLabel4.TextColor3 = tbl.Themes[str].ItemDescriptionColor
 					textLabel4.TextSize = 14
 					textLabel4.TextWrapped = true
-					local v14 = Enum
-					textLabel4.TextXAlignment = v14.TextXAlignment.Left
-					textLabel4.AutomaticSize = v14.AutomaticSize.Y
+					local v12 = Enum
+					textLabel4.TextXAlignment = v12.TextXAlignment.Left
+					textLabel4.AutomaticSize = v12.AutomaticSize.Y
 					textLabel4.LayoutOrder = 2
 					uiPadding5.Parent = frame13
 					uiPadding5.PaddingBottom = UDim.new(0, 10)
@@ -2942,25 +2942,25 @@ tbl.CreateWindow = function(arg, arg2)
 					end
 
 					local function fn2()
-						frame14.BackgroundColor3 = Color3.fromHSV(n2, v10, v11)
+						frame14.BackgroundColor3 = Color3.fromHSV(n2, n3, n4)
 						imageLabel5.BackgroundColor3 = Color3.fromHSV(n2, 1, 1)
 						tbl.Flags[flag10].color = tostring(frame14.BackgroundColor3)
 						pcall(callback, frame14.BackgroundColor3)
 					end
 
 					bindableEvent.Event:Connect(function(arg7)
-						local v15 = tbl
-						local tbl5 = { BackgroundColor3 = v15.Themes[arg7].ItemBackgroundColor }
+						local v13 = tbl
+						local tbl5 = { BackgroundColor3 = v13.Themes[arg7].ItemBackgroundColor }
 						TweenService:Create(frame13, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl5):Play()
-						local tbl6 = { TextColor3 = v15.Themes[arg7].ItemTitleColor }
+						local tbl6 = { TextColor3 = v13.Themes[arg7].ItemTitleColor }
 						TweenService:Create(textLabel3, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl6):Play()
-						local tbl7 = { TextColor3 = v15.Themes[arg7].ItemDescriptionColor }
+						local tbl7 = { TextColor3 = v13.Themes[arg7].ItemDescriptionColor }
 						TweenService:Create(textLabel4, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl7):Play()
-						local tbl8 = { BackgroundColor3 = v15.Themes[arg7].ItemBackgroundColor }
+						local tbl8 = { BackgroundColor3 = v13.Themes[arg7].ItemBackgroundColor }
 						TweenService:Create(frame15, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl8):Play()
-						local tbl9 = { TextColor3 = v15.Themes[arg7].ItemTitleColor }
+						local tbl9 = { TextColor3 = v13.Themes[arg7].ItemTitleColor }
 						TweenService:Create(textButton3, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl9):Play()
-						local tbl10 = { TextColor3 = v15.Themes[arg7].ItemTitleColor }
+						local tbl10 = { TextColor3 = v13.Themes[arg7].ItemTitleColor }
 						TweenService:Create(textLabel5, TweenInfo.new(0.2, Enum.EasingStyle.Quad), tbl10):Play()
 
 						if not flag9 then
@@ -2977,11 +2977,11 @@ tbl.CreateWindow = function(arg, arg2)
 					end)
 
 					local y = imageLabel3.AbsoluteSize.Y
-					local n3 = 1 - math.clamp(imageLabel4.AbsolutePosition.Y - imageLabel3.AbsolutePosition.Y, 0, imageLabel3.AbsoluteSize.Y) / y
+					n2 = 1 - math.clamp(imageLabel4.AbsolutePosition.Y - imageLabel3.AbsolutePosition.Y, 0, imageLabel3.AbsoluteSize.Y) / y
 					local x = imageLabel5.AbsoluteSize.X
-					local n4 = math.clamp(imageLabel6.AbsolutePosition.X - imageLabel5.AbsolutePosition.X, 0, imageLabel5.AbsoluteSize.X) / x
+					n3 = math.clamp(imageLabel6.AbsolutePosition.X - imageLabel5.AbsolutePosition.X, 0, imageLabel5.AbsoluteSize.X) / x
 					local y2 = imageLabel5.AbsoluteSize.Y
-					local n5 = 1 - math.clamp(imageLabel6.AbsolutePosition.Y - imageLabel5.AbsolutePosition.Y, 0, imageLabel5.AbsoluteSize.Y) / y2
+					n4 = 1 - math.clamp(imageLabel6.AbsolutePosition.Y - imageLabel5.AbsolutePosition.Y, 0, imageLabel5.AbsoluteSize.Y) / y2
 					frame14.BackgroundColor3 = currentColor
 					imageLabel5.BackgroundColor3 = currentColor
 					tbl.Flags[flag10].color = tostring(frame14.BackgroundColor3)
@@ -3000,14 +3000,14 @@ tbl.CreateWindow = function(arg, arg2)
 							end
 
 							connection4 = RunService.RenderStepped:Connect(function()
-								local v15 = imageLabel5
-								local x2 = v15.AbsoluteSize.X
-								local n6 = math.clamp(mouse.X - v15.AbsolutePosition.X, 0, v15.AbsoluteSize.X) / x2
-								local y3 = v15.AbsoluteSize.Y
-								local n7 = math.clamp(mouse.Y - v15.AbsolutePosition.Y, 0, v15.AbsoluteSize.Y) / y3
-								imageLabel6.Position = UDim2.new(n6, 0, n7, 0)
-								n4 = n6
-								n5 = 1 - n7
+								local v13 = imageLabel5
+								local x2 = v13.AbsoluteSize.X
+								local n5 = math.clamp(mouse.X - v13.AbsolutePosition.X, 0, v13.AbsoluteSize.X) / x2
+								local y3 = v13.AbsoluteSize.Y
+								local n6 = math.clamp(mouse.Y - v13.AbsolutePosition.Y, 0, v13.AbsoluteSize.Y) / y3
+								imageLabel6.Position = UDim2.new(n5, 0, n6, 0)
+								n3 = n5
+								n4 = 1 - n6
 								fn2(true)
 							end)
 						end
@@ -3026,14 +3026,14 @@ tbl.CreateWindow = function(arg, arg2)
 							end
 
 							connection4 = RunService.RenderStepped:Connect(function()
-								local v15 = imageLabel5
-								local x2 = v15.AbsoluteSize.X
-								local n6 = math.clamp(mouse.X - v15.AbsolutePosition.X, 0, v15.AbsoluteSize.X) / x2
-								local y3 = v15.AbsoluteSize.Y
-								local n7 = math.clamp(mouse.Y - v15.AbsolutePosition.Y, 0, v15.AbsoluteSize.Y) / y3
-								imageLabel6.Position = UDim2.new(n6, 0, n7, 0)
-								n4 = n6
-								n5 = 1 - n7
+								local v13 = imageLabel5
+								local x2 = v13.AbsoluteSize.X
+								local n5 = math.clamp(mouse.X - v13.AbsolutePosition.X, 0, v13.AbsoluteSize.X) / x2
+								local y3 = v13.AbsoluteSize.Y
+								local n6 = math.clamp(mouse.Y - v13.AbsolutePosition.Y, 0, v13.AbsoluteSize.Y) / y3
+								imageLabel6.Position = UDim2.new(n5, 0, n6, 0)
+								n3 = n5
+								n4 = 1 - n6
 								fn2(true)
 							end)
 						end
@@ -3063,9 +3063,9 @@ tbl.CreateWindow = function(arg, arg2)
 
 							connection5 = RunService.RenderStepped:Connect(function()
 								local y3 = imageLabel3.AbsoluteSize.Y
-								local n6 = math.clamp(mouse.Y - imageLabel3.AbsolutePosition.Y, 0, imageLabel3.AbsoluteSize.Y) / y3
-								imageLabel4.Position = UDim2.new(0.48, 0, n6, 0)
-								n3 = 1 - n6
+								local n5 = math.clamp(mouse.Y - imageLabel3.AbsolutePosition.Y, 0, imageLabel3.AbsoluteSize.Y) / y3
+								imageLabel4.Position = UDim2.new(0.48, 0, n5, 0)
+								n2 = 1 - n5
 								fn2(true)
 							end)
 						end
@@ -3085,9 +3085,9 @@ tbl.CreateWindow = function(arg, arg2)
 
 							connection5 = RunService.RenderStepped:Connect(function()
 								local y3 = imageLabel3.AbsoluteSize.Y
-								local n6 = math.clamp(mouse.Y - imageLabel3.AbsolutePosition.Y, 0, imageLabel3.AbsoluteSize.Y) / y3
-								imageLabel4.Position = UDim2.new(0.48, 0, n6, 0)
-								n3 = 1 - n6
+								local n5 = math.clamp(mouse.Y - imageLabel3.AbsolutePosition.Y, 0, imageLabel3.AbsoluteSize.Y) / y3
+								imageLabel4.Position = UDim2.new(0.48, 0, n5, 0)
+								n2 = 1 - n5
 								fn2(true)
 							end)
 						end
@@ -3122,9 +3122,9 @@ tbl.CreateWindow = function(arg, arg2)
 						end
 
 						if flag9 then
-							TweenService:Create(frame17, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundTransparency = 0 }):Play()
-							local v15
-							TweenService:Create(frame18, TweenInfo.new(0.2, v15.EasingStyle.Quad), { Position = UDim2.new(0.595, -3, 0.289000005, -4) }):Play()
+							local v13 = Enum
+							TweenService:Create(frame17, TweenInfo.new(0.2, v13.EasingStyle.Quad), { BackgroundTransparency = 0 }):Play()
+							TweenService:Create(frame18, TweenInfo.new(0.2, v13.EasingStyle.Quad), { Position = UDim2.new(0.595, -3, 0.289000005, -4) }):Play()
 							color = frame14.BackgroundColor3
 							color2 = imageLabel5.BackgroundColor3
 							position3 = imageLabel6.Position
@@ -3140,9 +3140,9 @@ tbl.CreateWindow = function(arg, arg2)
 								wait()
 							end
 						elseif not flag9 then
-							TweenService:Create(frame17, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundTransparency = 1 }):Play()
-							local v15
-							TweenService:Create(frame18, TweenInfo.new(0.2, v15.EasingStyle.Quad), { Position = UDim2.new(0.104999997, -3, 0.289000005, -4) }):Play()
+							local v13 = Enum
+							TweenService:Create(frame17, TweenInfo.new(0.2, v13.EasingStyle.Quad), { BackgroundTransparency = 1 }):Play()
+							TweenService:Create(frame18, TweenInfo.new(0.2, v13.EasingStyle.Quad), { Position = UDim2.new(0.104999997, -3, 0.289000005, -4) }):Play()
 							frame14.BackgroundColor3 = color
 							imageLabel5.BackgroundColor3 = color2
 							imageLabel6.Position = position3
@@ -3181,20 +3181,20 @@ tbl.CreateWindow = function(arg, arg2)
 					end)
 
 					local tbl5 = { SetColor = function(arg7, backgroundColor3)
-						local v15, v16, v17 = backgroundColor3:ToHSV()
-						n3 = v15
-						n4 = v16
-						n5 = v17
+						local v13, v14, v15 = backgroundColor3:ToHSV()
+						n2 = v13
+						n3 = v14
+						n4 = v15
 						frame14.BackgroundColor3 = backgroundColor3
-						imageLabel5.BackgroundColor3 = Color3.fromHSV(v15, 1, 1)
-						imageLabel6.Position = UDim2.new(v16, 0, 1 - v17, 0)
-						imageLabel4.Position = UDim2.new(0.48, 0, 1 - v15, 0)
+						imageLabel5.BackgroundColor3 = Color3.fromHSV(v13, 1, 1)
+						imageLabel6.Position = UDim2.new(v14, 0, 1 - v15, 0)
+						imageLabel4.Position = UDim2.new(0.48, 0, 1 - v13, 0)
 
 						if flag9 then
 							flag9 = false
-							TweenService:Create(frame17, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundTransparency = 1 }):Play()
-							local v18
-							TweenService:Create(frame18, TweenInfo.new(0.2, v18.EasingStyle.Quad), { Position = UDim2.new(0.104999997, -3, 0.289000005, -4) }):Play()
+							local v16 = Enum
+							TweenService:Create(frame17, TweenInfo.new(0.2, v16.EasingStyle.Quad), { BackgroundTransparency = 1 }):Play()
+							TweenService:Create(frame18, TweenInfo.new(0.2, v16.EasingStyle.Quad), { Position = UDim2.new(0.104999997, -3, 0.289000005, -4) }):Play()
 						end
 
 						tbl.Flags[flag10].color = backgroundColor3
@@ -3766,12 +3766,12 @@ tbl.CreateWindow = function(arg, arg2)
 							end
 
 							task.wait(0.1)
-							TweenService:Create(textLabel5, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { Rotation = 0 }):Play()
-							local v18
-							TweenService:Create(frame14, TweenInfo.new(0.2, v18.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
+							local v18 = Enum
+							TweenService:Create(textLabel5, TweenInfo.new(0.15, v18.EasingStyle.Quad), { Rotation = 0 }):Play()
+							local v19 = frame14
+							TweenService:Create(v19, TweenInfo.new(0.2, v18.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
 							task.wait(0.1)
 							flag9 = false
-							local v19
 							v19.Visible = false
 						end
 					end)
@@ -4636,8 +4636,8 @@ tbl.CreateWindow = function(arg, arg2)
 						if flag8 == false then
 							frame14.Visible = true
 							TweenService:Create(frame14, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 100) }):Play()
-							TweenService:Create(uiStroke2, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { Transparency = 0 }):Play()
-							local v16
+							local v16 = Enum
+							TweenService:Create(uiStroke2, TweenInfo.new(0.15, v16.EasingStyle.Quad), { Transparency = 0 }):Play()
 							TweenService:Create(imageLabel4, TweenInfo.new(0.15, v16.EasingStyle.Quad), { ImageTransparency = 0 }):Play()
 
 							for _, child in pairs(frame15:GetChildren()) do
@@ -4651,8 +4651,8 @@ tbl.CreateWindow = function(arg, arg2)
 							flag8 = true
 						elseif flag8 == true then
 							frame14.AutomaticSize = Enum.AutomaticSize.None
-							TweenService:Create(uiStroke2, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { Transparency = 1 }):Play()
-							local v16
+							local v16 = Enum
+							TweenService:Create(uiStroke2, TweenInfo.new(0.15, v16.EasingStyle.Quad), { Transparency = 1 }):Play()
 							TweenService:Create(imageLabel4, TweenInfo.new(0.15, v16.EasingStyle.Quad), { ImageTransparency = 1 }):Play()
 
 							for _, child in pairs(frame15:GetChildren()) do
@@ -4661,10 +4661,10 @@ tbl.CreateWindow = function(arg, arg2)
 								end
 							end
 
-							TweenService:Create(frame14, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
+							local v17 = frame14
+							TweenService:Create(v17, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
 							task.wait(0.1)
 							flag8 = false
-							local v17
 							v17.Visible = false
 						end
 					end)
@@ -4993,10 +4993,10 @@ tbl.CreateWindow = function(arg, arg2)
 								end
 							end
 
-							TweenService:Create(frame14, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
+							local v15 = frame14
+							TweenService:Create(v15, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
 							task.wait(0.1)
 							flag9 = false
-							local v15
 							v15.Visible = false
 						end
 					end)
@@ -5329,10 +5329,10 @@ tbl.CreateWindow = function(arg, arg2)
 							end
 
 							task.wait(0.1)
-							TweenService:Create(frame15, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
+							local v16 = frame15
+							TweenService:Create(v16, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
 							task.wait(0.1)
 							flag9 = false
-							local v16
 							v16.Visible = false
 						end
 					end)
@@ -5386,10 +5386,10 @@ tbl.CreateWindow = function(arg, arg2)
 
 							task.wait(0.1)
 							textLabel5.Text = v16
-							TweenService:Create(frame15, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
+							local v17 = frame15
+							TweenService:Create(v17, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 0) }):Play()
 							task.wait(0.1)
 							flag9 = false
-							local v17
 							v17.Visible = false
 							table.clear(tbl.Flags[flag8].selected)
 							local v18 = v16
