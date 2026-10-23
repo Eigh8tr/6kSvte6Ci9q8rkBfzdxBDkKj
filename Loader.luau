@@ -1287,7 +1287,7 @@ TextButton3.MouseButton1Click:Connect(function()
 		toh = { GameId = "703124385", ScriptName = "Tower Of Hell", FileName = "toh.lua" },
 		MM2 = { GameId = "66654135", ScriptName = "Murder Mystery 2", FileName = "MM2.lua" },
 		Evade = { GameId = "3647333358", ScriptName = "Evade", FileName = "Evade.lua" },
-		MergeANuke = { GameId = "10199301628", ScriptName = "Merge A Nuke", FileName = "8eG0a26L" },
+		MergeANuke = { GameId = "10199301628", ScriptName = "Merge A Nuke", FileName = "MergeANuke.luau" },
 		FleeTheFacility = { GameId = "372226183", ScriptName = "Flee The Facility", FileName = "FleeTheFacility.lua" },
 	}
 	
@@ -1308,7 +1308,7 @@ TextButton3.MouseButton1Click:Connect(function()
 		Frame21.Visible = true
 		wait(2)
 		TextLabel21.Text = "Fun Fact: <font color='rgb(255,255,255)'>All guis are custom made.</font>"
-		local response7 = game:HttpGet("https://pastebin.com/raw/" .. found.FileName)
+		local response7 = game:HttpGet("https://raw.githubusercontent.com/Eigh8tr/6kSvte6Ci9q8rkBfzdxBDkKj/refs/heads/main/" .. found.FileName)
 		local tween19 = TweenService:Create(Frame21, TweenInfo.new(0.8, Enum.EasingStyle.Quad), { Size = UDim2.new(0.5, 0, 0, 9) })
 		tween19:Play()
 		tween19.Completed:Wait()
