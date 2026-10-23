@@ -865,19 +865,43 @@ return {
 		TextLabel8.Position = UDim2.new(0.221, 0, 0, 0)
 		TextLabel8.Size = UDim2.new(0, 98, 0, 0)
 		Frame23.LayoutOrder = 9999999
-		TextButton.MouseButton1Click:Connect(function()
-			ScrollingFrame:GetDescendants()
-			Frame20:GetChildren()
-			local tween23 = TweenService:Create(Frame23, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), { BackgroundTransparency = 0 })
-			tween23:Play()
-			local tween24 = TweenService:Create(Frame24, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), { BackgroundTransparency = 0.04 })
-			tween24:Play()
-			local tween25 = TweenService:Create(Frame24, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), { Size = UDim2.new(0, 5, 0, 18) })
-			tween25:Play()
+		local HawkTabSelected = false
+		local HawkTabTween = TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+		local function HawkSelectTab(tabFrame, selectedFrame, page, instant)
+			for _, btn in ipairs(ScrollingFrame:GetChildren()) do
+				if btn.Name == "TabBtnFrame" and btn ~= tabFrame then
+					local tabButton = btn:FindFirstChild("TabButton")
+					local selected = tabButton and tabButton:FindFirstChild("Selected")
+					if instant then
+						btn.BackgroundTransparency = 1
+						if selected then selected.BackgroundTransparency = 1 end
+					else
+						TweenService:Create(btn, HawkTabTween, { BackgroundTransparency = 1 }):Play()
+						if selected then
+							TweenService:Create(selected, HawkTabTween, { BackgroundTransparency = 1 }):Play()
+						end
+					end
+				end
+			end
+			for _, child in ipairs(Frame20:GetChildren()) do
+				if child.Name == "Page" and child ~= page then
+					child.Visible = false
+				end
+			end
+			page.Visible = true
+			if instant then
+				tabFrame.BackgroundTransparency = 0
+				selectedFrame.BackgroundTransparency = 0.04
+				return
+			end
+			TweenService:Create(tabFrame, HawkTabTween, { BackgroundTransparency = 0 }):Play()
+			TweenService:Create(selectedFrame, HawkTabTween, { BackgroundTransparency = 0.04 }):Play()
+			TweenService:Create(selectedFrame, HawkTabTween, { Size = UDim2.new(0, 5, 0, 18) }):Play()
 			task.wait(0.2)
-			local tween26 = TweenService:Create(Frame24, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), { Size = UDim2.new(0, 5, 0, 16) })
-			tween26:Play()
-			ScrollingFrame2.Visible = true
+			TweenService:Create(selectedFrame, HawkTabTween, { Size = UDim2.new(0, 5, 0, 16) }):Play()
+		end
+		TextButton.MouseButton1Click:Connect(function()
+			HawkSelectTab(Frame23, Frame24, ScrollingFrame2)
 		end)
 		BindableEvent.Event:Connect(function(arg14)
 			local tween143 = TweenService:Create(Frame23, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg14].TabBackground })
@@ -2494,10 +2518,12 @@ return {
 				ImageLabel12.Position = UDim2.new(0.07, 0, 0.5, 0)
 				TextLabel28.Position = UDim2.new(0.221, 0, 0, 0)
 				TextLabel28.Size = UDim2.new(0, 98, 0, 0)
-				Frame44.BackgroundTransparency = 0
-				Frame45.BackgroundTransparency = 0.04
-				ScrollingFrame6.Visible = true
+				if not HawkTabSelected then
+					HawkTabSelected = true
+					HawkSelectTab(Frame44, Frame45, ScrollingFrame6, true)
+				end
 				TextButton11.MouseButton1Click:Connect(function()
+					HawkSelectTab(Frame44, Frame45, ScrollingFrame6)
 				end)
 				BindableEvent.Event:Connect(function(arg46)
 					local tween193 = TweenService:Create(Frame44, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg46].TabBackground })
