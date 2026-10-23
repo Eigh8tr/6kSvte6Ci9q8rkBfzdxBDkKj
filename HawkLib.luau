@@ -560,9 +560,12 @@ return {
 		Frame15.BackgroundTransparency = 1
 		Frame15.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Frame15.BorderSizePixel = 0
-		Frame15.Size = UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY))
+		local HawkViewport = workspace.CurrentCamera and workspace.CurrentCamera.ViewportSize or Vector2.new(1920, 1080)
+		local HawkW = math.min(math.max(tonumber(arg12.SizeX) or 0, 650), math.max(HawkViewport.X - 20, 480))
+		local HawkH = math.min(math.max(tonumber(arg12.SizeY) or 0, 450), math.max(HawkViewport.Y - 20, 259))
+		Frame15.Size = UDim2.new(0, HawkW, 0, HawkH)
 		local guiInset = GuiService:GetGuiInset()
-		Frame15.Position = UDim2.fromOffset(((workspace.CurrentCamera.ViewportSize.X / 2) - (UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY)).X.Offset / 2)), (((workspace.CurrentCamera.ViewportSize.Y / 2) - guiInset.Y) - (UDim2.new(0, tonumber(arg12.SizeX), 0, tonumber(arg12.SizeY)).Y.Offset / 2)))
+		Frame15.Position = UDim2.fromOffset(((workspace.CurrentCamera.ViewportSize.X / 2) - (HawkW / 2)), (((workspace.CurrentCamera.ViewportSize.Y / 2) - guiInset.Y) - (HawkH / 2)))
 		local HawkDragging, HawkDragStart, HawkStartPos = false, nil, nil
 		local HawkResizing, HawkResizeStart, HawkStartSize = false, nil, nil
 		local function HawkIsPress(input)
@@ -917,6 +920,15 @@ return {
 		TextLabel8.Size = UDim2.new(0, 98, 0, 0)
 		Frame23.LayoutOrder = 9999999
 		local HawkTabSelected = false
+		local HawkTheme = arg12.Theme
+		BindableEvent.Event:Connect(function(themeName)
+			if result[themeName] then
+				HawkTheme = themeName
+			end
+		end)
+		local function HawkColors()
+			return result[HawkTheme] or result[arg12.Theme]
+		end
 		local HawkTabTween = TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 		local function HawkSelectTab(tabFrame, selectedFrame, page, instant)
 			for _, btn in ipairs(ScrollingFrame:GetChildren()) do
@@ -951,7 +963,7 @@ return {
 			task.wait(0.2)
 			TweenService:Create(selectedFrame, HawkTabTween, { Size = UDim2.new(0, 5, 0, 16) }):Play()
 		end
-		TextButton.MouseButton1Click:Connect(function()
+		TextButton.MouseButton1Down:Connect(function()
 			HawkSelectTab(Frame23, Frame24, ScrollingFrame2)
 		end)
 		BindableEvent.Event:Connect(function(arg14)
@@ -1095,7 +1107,7 @@ return {
 		TextLabel11.Size = UDim2.new(0, 0, 1, 0)
 		TextLabel11.ZIndex = 2
 		TextLabel11.Font = Enum.Font.Gotham
-		TextLabel11.Text = lastKey
+		TextLabel11.Text = tostring(arg12.Theme)
 		TextLabel11.TextColor3 = result[arg12.Theme].ItemTitleColor
 		TextLabel11.TextSize = 15
 		TextLabel11.TextWrapped = true
@@ -1400,61 +1412,34 @@ return {
 			tween32:Play()
 		end)
 		TextButton5.Text = "H"
+		local HawkUIKeyListening = false
+		local function HawkFitUIKey()
+			Frame31.Size = UDim2.new(0, TextButton5.TextBounds.X + 20, 0, 30)
+		end
+		TextButton5.Text = tostring(getgenv().HawkLibKeybind or "H")
+		HawkFitUIKey()
 		TextButton5.MouseButton1Click:Connect(function()
+			HawkUIKeyListening = true
 			TextButton5.Text = "..."
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
-			UserInputService.InputBegan:Wait()
-			wait()
+			HawkFitUIKey()
 		end)
 		local connection = UserInputService.InputBegan:Connect(function(input7, gameProcessed7)
+			if input7.UserInputType ~= Enum.UserInputType.Keyboard then
+				return
+			end
+			if HawkUIKeyListening then
+				HawkUIKeyListening = false
+				getgenv().HawkLibKeybind = input7.KeyCode.Name
+				TextButton5.Text = input7.KeyCode.Name
+				HawkFitUIKey()
+				return
+			end
+			if gameProcessed7 then
+				return
+			end
+			if input7.KeyCode.Name == tostring(getgenv().HawkLibKeybind or "H") then
+				Frame15.Visible = not Frame15.Visible
+			end
 		end)
 		getgenv().KeyFunction = connection
 		local Frame33 = Instance.new("Frame")
@@ -2573,7 +2558,7 @@ return {
 					HawkTabSelected = true
 					HawkSelectTab(Frame44, Frame45, ScrollingFrame6, true)
 				end
-				TextButton11.MouseButton1Click:Connect(function()
+				TextButton11.MouseButton1Down:Connect(function()
 					HawkSelectTab(Frame44, Frame45, ScrollingFrame6)
 				end)
 				BindableEvent.Event:Connect(function(arg46)
@@ -2620,7 +2605,7 @@ return {
 						TextButton12.TextSize = 14
 						TextButton12.AutomaticSize = Enum.AutomaticSize.Y
 						TextButton12.MouseButton1Click:Connect(function()
-							arg48.Callback()
+							task.spawn(arg48.Callback, true)
 						end)
 						TextLabel29.Name = "ButtonTitle"
 						TextLabel29.Parent = TextButton12
@@ -2831,12 +2816,27 @@ return {
 							local tween58 = TweenService:Create(Frame47, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg12.Theme].ItemBackgroundColor })
 							tween58:Play()
 						end)
+						local HawkChecked = arg55.Status == true
+						local function HawkPaintCheck()
+							TweenService:Create(ImageLabel14, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { ImageTransparency = HawkChecked and 0 or 1 }):Play()
+						end
+						HawkPaintCheck()
+						if HawkChecked then
+							task.spawn(arg55.Callback, true)
+						end
 						TextButton13.MouseButton1Click:Connect(function()
-							arg55.Callback(arg55.Status)
+							HawkChecked = not HawkChecked
+							HawkPaintCheck()
+							task.spawn(arg55.Callback, HawkChecked)
 						end)
 						return {
 							SetStatus = function(arg59, arg60)
-								arg55.Callback(arg60)
+								HawkChecked = arg60 == true
+								HawkPaintCheck()
+								task.spawn(arg55.Callback, HawkChecked)
+							end,
+							GetStatus = function()
+								return HawkChecked
 							end
 						}
 					end,
@@ -3362,9 +3362,11 @@ return {
 						UIListLayout32.SortOrder = Enum.SortOrder.LayoutOrder
 						UIListLayout32.Padding = UDim.new(0, 6)
 						local changedSignal4 = TextBox4:GetPropertyChangedSignal("Text")
+						local HawkDropFilter
 						changedSignal4:Connect(function(arg70)
-							ScrollingFrame8:GetDescendants()
-							ScrollingFrame8:GetDescendants()
+							if HawkDropFilter then
+								HawkDropFilter(TextBox4.Text)
+							end
 						end)
 						BindableEvent.Event:Connect(function(arg71)
 							local tween214 = TweenService:Create(Frame55, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg71].ItemBackgroundColor })
@@ -3397,40 +3399,239 @@ return {
 						end)
 						TextLabel36.Visible = true
 						TextLabel37.Visible = true
+						local HawkDrop = { Open = false, Multi = arg69.MultiOption == true, Items = {}, Order = {}, Selected = {} }
+						local HawkDropInfo = TweenInfo.new(0.15, Enum.EasingStyle.Quad)
+						local function HawkDropSelected()
+							local out = {}
+							for _, name in ipairs(HawkDrop.Order) do
+								if HawkDrop.Selected[name] then
+									table.insert(out, name)
+								end
+							end
+							return out
+						end
+						local function HawkDropPaint()
+							local th = HawkColors()
+							for name, item in pairs(HawkDrop.Items) do
+								local on = HawkDrop.Selected[name] == true
+								item.Frame.BackgroundColor3 = on and (th.SelectedDropdownItemColor or th.ItemHoverColor) or th.DropdownItemBackground
+								item.Button.TextColor3 = on and (th.SelectedColor or th.ItemTitleColor) or th.DropdownItemText
+							end
+							for _, child in ipairs(ScrollingFrame7:GetChildren()) do
+								if child.Name == "SelectedItems" then
+									child:Destroy()
+								end
+							end
+							local list = HawkDropSelected()
+							local label = Instance.new("TextLabel")
+							label.Name = "SelectedItems"
+							label.BackgroundTransparency = 1
+							label.Size = UDim2.new(0, 0, 1, 0)
+							label.AutomaticSize = Enum.AutomaticSize.X
+							label.Font = Enum.Font.Gotham
+							label.TextSize = 14
+							label.TextColor3 = th.ItemTitleColor
+							label.TextXAlignment = Enum.TextXAlignment.Left
+							label.Text = #list > 0 and table.concat(list, ", ") or "None"
+							label.TextTransparency = HawkDrop.Open and 0 or 1
+							label.Parent = ScrollingFrame7
+						end
+						local function HawkDropFire()
+							local list = HawkDropSelected()
+							if HawkDrop.Multi then
+								task.spawn(arg69.Callback, list)
+							else
+								task.spawn(arg69.Callback, list[1])
+							end
+						end
+						local HawkDropSetOpen
+						local function HawkDropChoose(name, fire)
+							if HawkDrop.Multi then
+								HawkDrop.Selected[name] = not HawkDrop.Selected[name] or nil
+							else
+								HawkDrop.Selected = { [name] = true }
+							end
+							HawkDropPaint()
+							if fire ~= false then
+								HawkDropFire()
+							end
+							if not HawkDrop.Multi and HawkDrop.Open then
+								HawkDropSetOpen(false)
+							end
+						end
+						local function HawkDropAdd(name)
+							name = tostring(name)
+							if HawkDrop.Items[name] then
+								return
+							end
+							local th = HawkColors()
+							local itemFrame = Instance.new("Frame")
+							local itemButton = Instance.new("TextButton")
+							local corner = Instance.new("UICorner")
+							itemFrame.Name = "ItemFrame"
+							itemFrame.BackgroundColor3 = th.DropdownItemBackground
+							itemFrame.BorderSizePixel = 0
+							itemFrame.Size = UDim2.new(0.95, 0, 0, 27)
+							itemFrame.BackgroundTransparency = HawkDrop.Open and 0 or 1
+							corner.CornerRadius = UDim.new(0, 5)
+							corner.Parent = itemFrame
+							itemButton.Name = "ItemButton"
+							itemButton.BackgroundTransparency = 1
+							itemButton.BorderSizePixel = 0
+							itemButton.Size = UDim2.new(1, 0, 1, 0)
+							itemButton.AutoButtonColor = false
+							itemButton.Font = Enum.Font.Gotham
+							itemButton.Text = name
+							itemButton.TextColor3 = th.DropdownItemText
+							itemButton.TextSize = 14
+							itemButton.TextWrapped = true
+							itemButton.TextTransparency = HawkDrop.Open and 0 or 1
+							itemButton.Parent = itemFrame
+							itemFrame.Parent = ScrollingFrame8
+							HawkDrop.Items[name] = { Frame = itemFrame, Button = itemButton }
+							table.insert(HawkDrop.Order, name)
+							itemButton.MouseButton1Click:Connect(function()
+								HawkDropChoose(name)
+							end)
+						end
+						local function HawkDropRemove(name)
+							name = tostring(name)
+							local item = HawkDrop.Items[name]
+							if not item then
+								return
+							end
+							item.Frame:Destroy()
+							HawkDrop.Items[name] = nil
+							HawkDrop.Selected[name] = nil
+							for idx, n in ipairs(HawkDrop.Order) do
+								if n == name then
+									table.remove(HawkDrop.Order, idx)
+									break
+								end
+							end
+						end
+						local function HawkDropClear()
+							for _, name in ipairs(table.clone(HawkDrop.Order)) do
+								HawkDropRemove(name)
+							end
+							HawkDropPaint()
+						end
+						HawkDropFilter = function(query)
+							query = string.lower(tostring(query or ""))
+							for name, item in pairs(HawkDrop.Items) do
+								item.Frame.Visible = query == "" or string.find(string.lower(name), query, 1, true) ~= nil
+							end
+						end
+						HawkDropSetOpen = function(open)
+							HawkDrop.Open = open
+							local t = open and 0 or 1
+							TweenService:Create(TextLabel38, HawkDropInfo, { Rotation = open and 225 or 0 }):Play()
+							if open then
+								Frame56.Visible = true
+								TweenService:Create(Frame56, HawkDropInfo, { Size = UDim2.new(1, -15, 0, 100) }):Play()
+							else
+								Frame56.AutomaticSize = Enum.AutomaticSize.None
+							end
+							for _, x in ipairs(Frame56:GetDescendants()) do
+								if x:IsA("TextLabel") or x:IsA("TextButton") or x:IsA("TextBox") then
+									TweenService:Create(x, HawkDropInfo, { TextTransparency = t }):Play()
+								elseif x:IsA("ImageLabel") then
+									TweenService:Create(x, HawkDropInfo, { ImageTransparency = t }):Play()
+								elseif x:IsA("ScrollingFrame") then
+									TweenService:Create(x, HawkDropInfo, { ScrollBarImageTransparency = t }):Play()
+								end
+								if x.Name == "ItemFrame" then
+									TweenService:Create(x, HawkDropInfo, { BackgroundTransparency = t }):Play()
+								end
+							end
+							if open then
+								task.wait(0.1)
+								if HawkDrop.Open then
+									Frame56.AutomaticSize = Enum.AutomaticSize.Y
+								end
+							else
+								TweenService:Create(Frame56, HawkDropInfo, { Size = UDim2.new(1, -15, 0, 0) }):Play()
+								task.wait(0.15)
+								if not HawkDrop.Open then
+									Frame56.Visible = false
+								end
+							end
+						end
+						if type(arg69.List) == "table" then
+							for _, name in ipairs(arg69.List) do
+								HawkDropAdd(name)
+							end
+						end
+						HawkDropPaint()
 						TextButton17.MouseButton1Click:Connect(function()
-							Frame56.Visible = true
-							local tween67 = TweenService:Create(Frame56, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { Size = UDim2.new(1, -15, 0, 100) })
-							tween67:Play()
-							local tween68 = TweenService:Create(TextLabel38, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { Rotation = 225 })
-							tween68:Play()
-							task.wait(0.1)
-							Frame56:GetDescendants()
-							local tween69 = TweenService:Create(ImageLabel19, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { ImageTransparency = 0 })
-							tween69:Play()
-							local tween70 = TweenService:Create(TextBox4, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { TextTransparency = 0 })
-							tween70:Play()
-							local tween71 = TweenService:Create(TextLabel39, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { TextTransparency = 0 })
-							tween71:Play()
-							local tween72 = TweenService:Create(ScrollingFrame7, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { ScrollBarImageTransparency = 0 })
-							tween72:Play()
-							local tween73 = TweenService:Create(ScrollingFrame8, TweenInfo.new(0.15, Enum.EasingStyle.Quad), { ScrollBarImageTransparency = 0 })
-							tween73:Play()
-							Frame56.AutomaticSize = Enum.AutomaticSize.Y
+							HawkDropSetOpen(not HawkDrop.Open)
 						end)
 						return {
+							Add = function(self, name)
+								HawkDropAdd(name)
+								HawkDropPaint()
+							end,
+							Remove = function(self, name)
+								HawkDropRemove(name)
+								HawkDropPaint()
+							end,
 							Clear = function(arg74, arg75)
-								ScrollingFrame8:GetDescendants()
-								ScrollingFrame7:GetDescendants()
+								HawkDropClear()
 							end,
 							ClearSelections = function(arg76, arg77)
-								ScrollingFrame7:GetDescendants()
-								ScrollingFrame8:GetDescendants()
+								HawkDrop.Selected = {}
+								HawkDropPaint()
+								HawkDropFire()
 							end,
 							Refresh = function(arg78, arg79)
-								ScrollingFrame8:GetDescendants()
-								ScrollingFrame7:GetDescendants()
+								local newList = arg79
+								if type(arg79) == "table" and (arg79.NewList or arg79.List) then
+									newList = arg79.NewList or arg79.List
+									if arg79.MultiOption ~= nil then
+										HawkDrop.Multi = arg79.MultiOption == true
+									end
+								end
+								local keep = table.clone(HawkDrop.Selected)
+								HawkDropClear()
+								for _, name in ipairs(type(newList) == "table" and newList or {}) do
+									HawkDropAdd(name)
+								end
+								local selected = {}
+								for name in pairs(keep) do
+									if HawkDrop.Items[name] then
+										selected[name] = true
+									end
+								end
+								HawkDrop.Selected = selected
+								HawkDropFilter(TextBox4.Text)
+								HawkDropPaint()
 							end,
 							Select = function(arg80, arg81)
+								if type(arg81) == "table" then
+									HawkDrop.Selected = {}
+									for _, name in ipairs(arg81) do
+										if HawkDrop.Items[tostring(name)] then
+											HawkDrop.Selected[tostring(name)] = true
+										end
+									end
+									HawkDropPaint()
+									HawkDropFire()
+								elseif arg81 ~= nil and HawkDrop.Items[tostring(arg81)] then
+									if HawkDrop.Multi then
+										HawkDrop.Selected[tostring(arg81)] = true
+										HawkDropPaint()
+										HawkDropFire()
+									else
+										HawkDropChoose(tostring(arg81))
+									end
+								end
+							end,
+							GetSelected = function()
+								local list = HawkDropSelected()
+								if HawkDrop.Multi then
+									return list
+								end
+								return list[1]
 							end
 						}
 					end,
@@ -3801,8 +4002,18 @@ return {
 							local tween82 = TweenService:Create(Frame61, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg12.Theme].ItemBackgroundColor })
 							tween82:Play()
 						end)
-						TextButton19.Text = arg88.Key.Name
+						local HawkKey = arg88.Key
+						if type(HawkKey) == "string" then
+							HawkKey = Enum.KeyCode[HawkKey]
+						end
+						local HawkKeyListening = false
+						local function HawkFitKey()
+							TextButton19.Text = HawkKey and HawkKey.Name or "None"
+							Frame62.Size = UDim2.new(0, TextButton19.TextBounds.X + 20, 0, 30)
+						end
+						HawkFitKey()
 						TextButton19.MouseButton1Click:Connect(function()
+							HawkKeyListening = true
 							TextButton19.Text = "..."
 							wait()
 							UserInputService.InputBegan:Wait()
@@ -3857,15 +4068,35 @@ return {
 							wait()
 						end)
 						local connection2 = UserInputService.InputBegan:Connect(function(input14, gameProcessed14)
+							if input14.UserInputType ~= Enum.UserInputType.Keyboard then
+								return
+							end
+							if HawkKeyListening then
+								HawkKeyListening = false
+								HawkKey = input14.KeyCode
+								HawkFitKey()
+								return
+							end
+							if gameProcessed14 then
+								return
+							end
+							if HawkKey and input14.KeyCode == HawkKey and arg88.Callback then
+								task.spawn(arg88.Callback, HawkKey)
+							end
 						end)
 						return {
 							GetKey = function(arg92, arg93)
-								return arg88.Key.Name
+								return HawkKey and HawkKey.Name
 							end,
 							SetKey = function(arg94, arg95)
-								getgenv().KeyFunction = connection2
-								TextButton19.Text = arg95
-								Frame62.Size = UDim2.new(0, (TextButton19.AbsoluteSize.X + 20), 0, 30)
+								if type(arg95) == "string" then
+									arg95 = Enum.KeyCode[arg95]
+								end
+								HawkKey = arg95
+								HawkFitKey()
+							end,
+							Disconnect = function()
+								connection2:Disconnect()
 							end
 						}
 					end,
@@ -4623,17 +4854,57 @@ return {
 						end)
 						TextLabel54.Visible = true
 						TextLabel55.Visible = true
+						local HawkMin = tonumber(tostring(arg123.MinValue)) or 0
+						local HawkMax = tonumber(tostring(arg123.MaxValue)) or 100
+						if HawkMax <= HawkMin then
+							HawkMax = HawkMin + 1
+						end
+						local HawkValue = HawkMin
+						local HawkSliding = false
+						local function HawkSetSlider(value, fire)
+							value = math.floor(math.clamp(tonumber(value) or HawkMin, HawkMin, HawkMax))
+							HawkValue = value
+							TextLabel56.Text = tostring(value)
+							local rel = (value - HawkMin) / (HawkMax - HawkMin)
+							Frame78:TweenSize(UDim2.new(rel, 0, 1, 0), "Out", "Quad", 0.09, true)
+							if fire then
+								task.spawn(arg123.Callback, value)
+							end
+						end
+						local function HawkSlideTo(x)
+							local width = Frame77.AbsoluteSize.X
+							if width <= 0 then
+								return
+							end
+							local rel = math.clamp((x - Frame77.AbsolutePosition.X) / width, 0, 1)
+							local value = math.floor(HawkMin + (HawkMax - HawkMin) * rel + 0.5)
+							if value ~= HawkValue then
+								HawkSetSlider(value, true)
+							end
+						end
 						TextButton23.InputBegan:Connect(function(input15, gameProcessed15)
+							if input15.UserInputType == Enum.UserInputType.MouseButton1 or input15.UserInputType == Enum.UserInputType.Touch then
+								HawkSliding = true
+								HawkSlideTo(input15.Position.X)
+							end
 						end)
 						UserInputService.InputChanged:Connect(function(input16, gameProcessed16)
+							if HawkSliding and (input16.UserInputType == Enum.UserInputType.MouseMovement or input16.UserInputType == Enum.UserInputType.Touch) then
+								HawkSlideTo(input16.Position.X)
+							end
 						end)
 						UserInputService.InputEnded:Connect(function(input17, gameProcessed17)
+							if input17.UserInputType == Enum.UserInputType.MouseButton1 or input17.UserInputType == Enum.UserInputType.Touch then
+								HawkSliding = false
+							end
 						end)
+						HawkSetSlider(arg123.CurrentValue or arg123.Default or HawkMin, arg123.CurrentValue ~= nil)
 						return {
 							SetValue = function(arg127, arg128)
-								TextLabel56.Text = math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue))))
-								arg123.Callback(math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))))
-								Frame78:TweenSize(UDim2.new(0, math.max((((math.floor(math.clamp(arg128, tonumber(tostring(arg123.MinValue)), tonumber(tostring(arg123.MaxValue)))) - tonumber(tostring(arg123.MinValue))) / (tonumber(tostring(arg123.MaxValue)) - tonumber(tostring(arg123.MinValue)))) * CanvasGroup.AbsoluteSize.X), 7), 1, 0), "Out", "Quad", 0.09, true)
+								HawkSetSlider(arg128, true)
+							end,
+							GetValue = function()
+								return HawkValue
 							end
 						}
 					end,
@@ -4923,26 +5194,45 @@ return {
 							local tween108 = TweenService:Create(Frame82, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg12.Theme].ItemBackgroundColor })
 							tween108:Play()
 						end)
+						local HawkToggleOn = arg142.Status == true
+						local function HawkPaintToggle(instant)
+							local th = HawkColors()
+							local info = TweenInfo.new(instant and 0 or 0.2, Enum.EasingStyle.Quad)
+							local bg = HawkToggleOn and th.ToggleBackgroundAfter or (th.ToggleBackgroundBefore or th.ItemHoverColor)
+							local knob = HawkToggleOn and th.SlidingToggleAfter or th.SlidingToggleBefore
+							local stroke = HawkToggleOn and th.ToggleStrokeAfter or th.ToggleStrokeBefore
+							if bg then TweenService:Create(Frame83, info, { BackgroundColor3 = bg }):Play() end
+							if knob then TweenService:Create(Frame84, info, { BackgroundColor3 = knob }):Play() end
+							if stroke then TweenService:Create(UIStroke11, info, { Color = stroke }):Play() end
+							TweenService:Create(Frame84, info, { Position = HawkToggleOn and UDim2.new(1, 0, 0, 0) or UDim2.new(0.435, 0, 0, 0) }):Play()
+						end
 						BindableEvent.Event:Connect(function(arg145)
-							local tween270 = TweenService:Create(Frame82, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg145].ItemBackgroundColor })
-							tween270:Play()
-							local tween271 = TweenService:Create(TextLabel60, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { TextColor3 = result[arg145].ItemTitleColor })
-							tween271:Play()
-							local tween272 = TweenService:Create(TextLabel61, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { TextColor3 = result[arg145].ItemDescriptionColor })
-							tween272:Play()
-							local tween273 = TweenService:Create(Frame83, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg145].ToggleBackgroundAfter })
-							tween273:Play()
-							local tween274 = TweenService:Create(Frame84, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = result[arg145].SlidingToggleAfter })
-							tween274:Play()
-							local tween275 = TweenService:Create(UIStroke11, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Color = result[arg145].ToggleStrokeAfter })
-							tween275:Play()
+							local th = result[arg145]
+							if not th then
+								return
+							end
+							TweenService:Create(Frame82, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { BackgroundColor3 = th.ItemBackgroundColor }):Play()
+							TweenService:Create(TextLabel60, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { TextColor3 = th.ItemTitleColor }):Play()
+							TweenService:Create(TextLabel61, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { TextColor3 = th.ItemDescriptionColor }):Play()
+							task.defer(HawkPaintToggle)
 						end)
+						HawkPaintToggle(true)
+						if HawkToggleOn then
+							task.spawn(arg142.Callback, true)
+						end
 						TextButton24.MouseButton1Click:Connect(function()
-							arg142.Callback(arg142.Status)
+							HawkToggleOn = not HawkToggleOn
+							HawkPaintToggle()
+							task.spawn(arg142.Callback, HawkToggleOn)
 						end)
 						return {
 							SetStatus = function(arg146, arg147)
-								arg142.Callback(arg147)
+								HawkToggleOn = arg147 == true
+								HawkPaintToggle()
+								task.spawn(arg142.Callback, HawkToggleOn)
+							end,
+							GetStatus = function()
+								return HawkToggleOn
 							end
 						}
 					end,
